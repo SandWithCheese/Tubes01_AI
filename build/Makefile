@@ -129,6 +129,30 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+src/cube/magicfive.o: src/cube/magicfive.cpp.o
+.PHONY : src/cube/magicfive.o
+
+# target to build an object file
+src/cube/magicfive.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cube/magicfive.cpp.o
+.PHONY : src/cube/magicfive.cpp.o
+
+src/cube/magicfive.i: src/cube/magicfive.cpp.i
+.PHONY : src/cube/magicfive.i
+
+# target to preprocess a source file
+src/cube/magicfive.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cube/magicfive.cpp.i
+.PHONY : src/cube/magicfive.cpp.i
+
+src/cube/magicfive.s: src/cube/magicfive.cpp.s
+.PHONY : src/cube/magicfive.s
+
+# target to generate assembly for a file
+src/cube/magicfive.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cube/magicfive.cpp.s
+.PHONY : src/cube/magicfive.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -162,6 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main"
+	@echo "... src/cube/magicfive.o"
+	@echo "... src/cube/magicfive.i"
+	@echo "... src/cube/magicfive.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
