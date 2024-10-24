@@ -153,6 +153,30 @@ src/cube/magicfive.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cube/magicfive.cpp.s
 .PHONY : src/cube/magicfive.cpp.s
 
+src/hillclimb/stochastic.o: src/hillclimb/stochastic.cpp.o
+.PHONY : src/hillclimb/stochastic.o
+
+# target to build an object file
+src/hillclimb/stochastic.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hillclimb/stochastic.cpp.o
+.PHONY : src/hillclimb/stochastic.cpp.o
+
+src/hillclimb/stochastic.i: src/hillclimb/stochastic.cpp.i
+.PHONY : src/hillclimb/stochastic.i
+
+# target to preprocess a source file
+src/hillclimb/stochastic.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hillclimb/stochastic.cpp.i
+.PHONY : src/hillclimb/stochastic.cpp.i
+
+src/hillclimb/stochastic.s: src/hillclimb/stochastic.cpp.s
+.PHONY : src/hillclimb/stochastic.s
+
+# target to generate assembly for a file
+src/hillclimb/stochastic.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hillclimb/stochastic.cpp.s
+.PHONY : src/hillclimb/stochastic.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -177,6 +201,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/solver/solver.o: src/solver/solver.cpp.o
+.PHONY : src/solver/solver.o
+
+# target to build an object file
+src/solver/solver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/solver/solver.cpp.o
+.PHONY : src/solver/solver.cpp.o
+
+src/solver/solver.i: src/solver/solver.cpp.i
+.PHONY : src/solver/solver.i
+
+# target to preprocess a source file
+src/solver/solver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/solver/solver.cpp.i
+.PHONY : src/solver/solver.cpp.i
+
+src/solver/solver.s: src/solver/solver.cpp.s
+.PHONY : src/solver/solver.s
+
+# target to generate assembly for a file
+src/solver/solver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/solver/solver.cpp.s
+.PHONY : src/solver/solver.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -189,9 +237,15 @@ help:
 	@echo "... src/cube/magicfive.o"
 	@echo "... src/cube/magicfive.i"
 	@echo "... src/cube/magicfive.s"
+	@echo "... src/hillclimb/stochastic.o"
+	@echo "... src/hillclimb/stochastic.i"
+	@echo "... src/hillclimb/stochastic.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/solver/solver.o"
+	@echo "... src/solver/solver.i"
+	@echo "... src/solver/solver.s"
 .PHONY : help
 
 

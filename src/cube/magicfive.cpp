@@ -4,18 +4,42 @@ MagicFive::MagicFive() {
     data = this->generateRandomCube();
 }
 
+MagicFive::MagicFive(const vector<vector<int>>& new_data) : data(new_data) {}
+
 MagicFive::MagicFive(const MagicFive& other) : data(other.data) {}
 
 MagicFive::~MagicFive() {}
 
+vector<vector<int>> MagicFive::getData() {
+    return data;
+}
+
+void MagicFive::setData(const vector<vector<int>>& new_data) {
+    data = new_data;
+}
+
 vector<vector<int>> MagicFive::listToMatrix(const vector<int>& cube_list) {
     vector<vector<int>> cube_num(rows, vector<int>(cols));
+
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             cube_num[i][j] = cube_list[i * cols + j];
         }
     }
+
     return cube_num;
+}
+
+vector<int> MagicFive::matrixToList(const vector<vector<int>>& cube) {
+    vector<int> cube_list(rows * cols);
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cube_list[i * cols + j] = cube[i][j];
+        }
+    }
+
+    return cube_list;
 }
 
 vector<vector<int>> MagicFive::generateRandomCube() {
@@ -26,8 +50,35 @@ vector<vector<int>> MagicFive::generateRandomCube() {
     return listToMatrix(random_cube_list);
 }
 
+vector<vector<int>> MagicFive::generateSuccessors(const vector<vector<int>>& cube) {
+    vector<int> cube_list = matrixToList(cube);
+
+    vector<vector<int>> successors;
+    for (size_t i = 0; i < cube_list.size(); ++i) {
+        for (size_t j = i + 1; j < cube_list.size(); ++j) {
+            vector<int> new_cube = cube_list;
+            swap(new_cube[i], new_cube[j]);
+            successors.push_back(new_cube);
+        }
+    }
+
+    return successors;
+}
+
+vector<vector<int>> MagicFive::generateRandomSuccessor(const vector<vector<int>>& cube) {
+    vector<vector<int>> random_successor = cube;
+    int i = rand() % rows;
+    int j = rand() % cols;
+    int k = rand() % rows;
+    int l = rand() % cols;
+    swap(random_successor[i][j], random_successor[k][l]);
+
+    return random_successor;
+}
+
 int MagicFive::checkRow() {
     int heuristic = 0;
+
     for (const auto& row : data) {
         for (int j = 0; j < cols; j += 5) {
             int row_sum = accumulate(row.begin() + j, row.begin() + j + 5, 0);
@@ -36,11 +87,13 @@ int MagicFive::checkRow() {
             }
         }
     }
+
     return heuristic;
 }
 
 int MagicFive::checkColumn() {
     int heuristic = 0;
+
     for (int i = 0; i < cols; ++i) {
         int col_sum = 0;
         for (int j = 0; j < rows; ++j) {
@@ -50,11 +103,13 @@ int MagicFive::checkColumn() {
             heuristic++;
         }
     }
+
     return heuristic;
 }
 
 int MagicFive::checkPillar() {
     int heuristic = 0;
+
     for (int i = 0; i < cols; ++i) {
         int pillar_sum = 0;
         for (int j = 0; j < rows; ++j) {
@@ -64,6 +119,7 @@ int MagicFive::checkPillar() {
             heuristic++;
         }
     }
+
     return heuristic;
 }
 
@@ -82,6 +138,7 @@ int MagicFive::checkSpaceDiagonal() {
             heuristic++;
         }
     }
+
     return heuristic;
 }
 

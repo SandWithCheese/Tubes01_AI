@@ -18,11 +18,19 @@ private:
 
 public:
     MagicFive();
+    MagicFive(const vector<vector<int>>& new_data);
     MagicFive(const MagicFive& other);
     ~MagicFive();
 
+    vector<vector<int>> getData();
+    void setData(const vector<vector<int>>& new_data);
+
     vector<vector<int>> listToMatrix(const vector<int>& cube_list);
+    vector<int> matrixToList(const vector<vector<int>>& cube);
     vector<vector<int>> generateRandomCube();
+
+    vector<vector<int>> generateSuccessors(const vector<vector<int>>& cube);
+    vector<vector<int>> generateRandomSuccessor(const vector<vector<int>>& cube);
 
     int checkRow();
     int checkColumn();

@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(main 
                src/main.cpp
-               src/cube/magicfive.cpp)
+               src/cube/magicfive.cpp
+               src/solver/solver.cpp
+               src/hillclimb/stochastic.cpp)
