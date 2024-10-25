@@ -22,22 +22,24 @@ public:
     MagicFive(const MagicFive& other);
     ~MagicFive();
 
-    vector<vector<int>> getData();
+    vector<vector<int>> getData() const;
     void setData(const vector<vector<int>>& new_data);
-    int getRows();
-    int getCols();
+    int getRows() const;
+    int getCols() const;
 
     static vector<vector<int>> listToMatrix(const vector<int>& cube_list);
     static vector<int> matrixToList(const vector<vector<int>>& cube);
 
     vector<vector<int>> generateRandomCube();
 
-    int checkRow();
-    int checkColumn();
-    int checkPillar();
-    int checkSpaceDiagonal();
-    int checkPlaneDiagonal();
-    int objectiveFunction();
+    int checkRow() const;
+    int checkColumn() const;
+    int checkPillar() const;
+    int checkSpaceDiagonal() const;
+    int checkPlaneDiagonal() const;
+
+    int objectiveFunction() const;
+    int fitnessFunction() const;
 
     void showCube();
 };

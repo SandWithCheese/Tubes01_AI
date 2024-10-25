@@ -12,7 +12,7 @@ MagicFive::MagicFive(const MagicFive& other) : rows(other.rows), cols(other.cols
 
 MagicFive::~MagicFive() {}
 
-vector<vector<int>> MagicFive::getData() {
+vector<vector<int>> MagicFive::getData() const {
     return data;
 }
 
@@ -20,11 +20,11 @@ void MagicFive::setData(const vector<vector<int>>& new_data) {
     data = new_data;
 }
 
-int MagicFive::getRows() {
+int MagicFive::getRows() const {
     return rows;
 }
 
-int MagicFive::getCols() {
+int MagicFive::getCols() const {
     return cols;
 }
 
@@ -60,7 +60,7 @@ vector<vector<int>> MagicFive::generateRandomCube() {
     return listToMatrix(random_cube_list);
 }
 
-int MagicFive::checkRow() {
+int MagicFive::checkRow() const {
     int heuristic = 0;
 
     for (const auto& row : data) {
@@ -75,7 +75,7 @@ int MagicFive::checkRow() {
     return heuristic;
 }
 
-int MagicFive::checkColumn() {
+int MagicFive::checkColumn() const {
     int heuristic = 0;
 
     for (int i = 0; i < cols; ++i) {
@@ -91,7 +91,7 @@ int MagicFive::checkColumn() {
     return heuristic;
 }
 
-int MagicFive::checkPillar() {
+int MagicFive::checkPillar() const {
     int heuristic = 0;
 
     for (int i = 0; i < cols; ++i) {
@@ -107,7 +107,7 @@ int MagicFive::checkPillar() {
     return heuristic;
 }
 
-int MagicFive::checkSpaceDiagonal() {
+int MagicFive::checkSpaceDiagonal() const {
     int heuristic = 0;
     // Four diagonals
     vector<int> diags = {
@@ -126,7 +126,7 @@ int MagicFive::checkSpaceDiagonal() {
     return heuristic;
 }
 
-int MagicFive::checkPlaneDiagonal() {
+int MagicFive::checkPlaneDiagonal() const {
     int heuristic = 0;
 
     // Check diagonals divided by rows
@@ -156,8 +156,12 @@ int MagicFive::checkPlaneDiagonal() {
     return heuristic;
 }
 
-int MagicFive::objectiveFunction() {
+int MagicFive::objectiveFunction() const {
     return -(checkRow() + checkColumn() + checkPillar() + checkSpaceDiagonal() + checkPlaneDiagonal());
+}
+
+int MagicFive::fitnessFunction() const {
+    return 109 + objectiveFunction();
 }
 
 void MagicFive::showCube() {

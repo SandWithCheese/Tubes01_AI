@@ -129,6 +129,30 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+src/advanced/genetic.o: src/advanced/genetic.cpp.o
+.PHONY : src/advanced/genetic.o
+
+# target to build an object file
+src/advanced/genetic.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/advanced/genetic.cpp.o
+.PHONY : src/advanced/genetic.cpp.o
+
+src/advanced/genetic.i: src/advanced/genetic.cpp.i
+.PHONY : src/advanced/genetic.i
+
+# target to preprocess a source file
+src/advanced/genetic.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/advanced/genetic.cpp.i
+.PHONY : src/advanced/genetic.cpp.i
+
+src/advanced/genetic.s: src/advanced/genetic.cpp.s
+.PHONY : src/advanced/genetic.s
+
+# target to generate assembly for a file
+src/advanced/genetic.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/advanced/genetic.cpp.s
+.PHONY : src/advanced/genetic.cpp.s
+
 src/cube/magicfive.o: src/cube/magicfive.cpp.o
 .PHONY : src/cube/magicfive.o
 
@@ -258,6 +282,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main"
+	@echo "... src/advanced/genetic.o"
+	@echo "... src/advanced/genetic.i"
+	@echo "... src/advanced/genetic.s"
 	@echo "... src/cube/magicfive.o"
 	@echo "... src/cube/magicfive.i"
 	@echo "... src/cube/magicfive.s"

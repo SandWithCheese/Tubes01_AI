@@ -8,4 +8,5 @@ add_executable(main
                src/cube/magicfive.cpp
                src/solver/solver.cpp
                src/hillclimb/hillclimb.cpp
-               src/hillclimb/stochastic.cpp)
+               src/hillclimb/stochastic.cpp
+               src/advanced/genetic.cpp)
