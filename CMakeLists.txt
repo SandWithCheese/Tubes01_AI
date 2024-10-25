@@ -7,4 +7,5 @@ add_executable(main
                src/main.cpp
                src/cube/magicfive.cpp
                src/solver/solver.cpp
+               src/hillclimb/hillclimb.cpp
                src/hillclimb/stochastic.cpp)

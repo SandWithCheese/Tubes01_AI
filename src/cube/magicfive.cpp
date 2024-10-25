@@ -1,12 +1,14 @@
 #include "magicfive.hpp"
 
 MagicFive::MagicFive() {
+    rows = 5;
+    cols = 25;
     data = this->generateRandomCube();
 }
 
-MagicFive::MagicFive(const vector<vector<int>>& new_data) : data(new_data) {}
+MagicFive::MagicFive(const vector<vector<int>>& new_data) : rows(5), cols(25), data(new_data) {}
 
-MagicFive::MagicFive(const MagicFive& other) : data(other.data) {}
+MagicFive::MagicFive(const MagicFive& other) : rows(other.rows), cols(other.cols), data(other.data) {}
 
 MagicFive::~MagicFive() {}
 
@@ -18,12 +20,20 @@ void MagicFive::setData(const vector<vector<int>>& new_data) {
     data = new_data;
 }
 
-vector<vector<int>> MagicFive::listToMatrix(const vector<int>& cube_list) {
-    vector<vector<int>> cube_num(rows, vector<int>(cols));
+int MagicFive::getRows() {
+    return rows;
+}
 
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            cube_num[i][j] = cube_list[i * cols + j];
+int MagicFive::getCols() {
+    return cols;
+}
+
+vector<vector<int>> MagicFive::listToMatrix(const vector<int>& cube_list) {
+    vector<vector<int>> cube_num(5, vector<int>(25));
+
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 25; ++j) {
+            cube_num[i][j] = cube_list[i * 25 + j];
         }
     }
 
@@ -31,11 +41,11 @@ vector<vector<int>> MagicFive::listToMatrix(const vector<int>& cube_list) {
 }
 
 vector<int> MagicFive::matrixToList(const vector<vector<int>>& cube) {
-    vector<int> cube_list(rows * cols);
+    vector<int> cube_list(125);
 
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            cube_list[i * cols + j] = cube[i][j];
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 25; ++j) {
+            cube_list[i * 25 + j] = cube[i][j];
         }
     }
 
@@ -48,32 +58,6 @@ vector<vector<int>> MagicFive::generateRandomCube() {
     shuffle(random_cube_list.begin(), random_cube_list.end(), random_device());
 
     return listToMatrix(random_cube_list);
-}
-
-vector<vector<int>> MagicFive::generateSuccessors(const vector<vector<int>>& cube) {
-    vector<int> cube_list = matrixToList(cube);
-
-    vector<vector<int>> successors;
-    for (size_t i = 0; i < cube_list.size(); ++i) {
-        for (size_t j = i + 1; j < cube_list.size(); ++j) {
-            vector<int> new_cube = cube_list;
-            swap(new_cube[i], new_cube[j]);
-            successors.push_back(new_cube);
-        }
-    }
-
-    return successors;
-}
-
-vector<vector<int>> MagicFive::generateRandomSuccessor(const vector<vector<int>>& cube) {
-    vector<vector<int>> random_successor = cube;
-    int i = rand() % rows;
-    int j = rand() % cols;
-    int k = rand() % rows;
-    int l = rand() % cols;
-    swap(random_successor[i][j], random_successor[k][l]);
-
-    return random_successor;
 }
 
 int MagicFive::checkRow() {

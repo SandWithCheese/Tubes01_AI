@@ -1,7 +1,7 @@
 #include "stochastic.hpp"
 
-Stochastic::Stochastic() : Solver() {}
-Stochastic::Stochastic(const MagicFive& other) : Solver(other) {}
+Stochastic::Stochastic() : HillClimb() {}
+Stochastic::Stochastic(const MagicFive& other) : HillClimb(other) {}
 
 void Stochastic::solve() {
     int iterations = 0;
@@ -9,7 +9,7 @@ void Stochastic::solve() {
         vector<vector<int>> current_cube = cube.getData();
         int current_obj = cube.objectiveFunction();
 
-        vector<vector<int>> random_successor_data = cube.generateRandomSuccessor(current_cube);
+        vector<vector<int>> random_successor_data = generateRandomSuccessor();
         MagicFive random_successor = MagicFive(random_successor_data);
 
         int random_obj = random_successor.objectiveFunction();

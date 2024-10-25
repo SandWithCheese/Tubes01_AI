@@ -6,11 +6,12 @@
 #include <random>
 #include <algorithm>
 #include "../cube/magicfive.hpp"
-#include "../solver/solver.hpp"
+#include "hillclimb.hpp"
+
 
 using namespace std;
 
-class Stochastic : public Solver {
+class Stochastic : public HillClimb {
 public:
     Stochastic();
     Stochastic(const MagicFive& other);
