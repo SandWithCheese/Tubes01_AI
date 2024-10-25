@@ -153,6 +153,30 @@ src/cube/magicfive.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cube/magicfive.cpp.s
 .PHONY : src/cube/magicfive.cpp.s
 
+src/hillclimb/hillclimb.o: src/hillclimb/hillclimb.cpp.o
+.PHONY : src/hillclimb/hillclimb.o
+
+# target to build an object file
+src/hillclimb/hillclimb.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hillclimb/hillclimb.cpp.o
+.PHONY : src/hillclimb/hillclimb.cpp.o
+
+src/hillclimb/hillclimb.i: src/hillclimb/hillclimb.cpp.i
+.PHONY : src/hillclimb/hillclimb.i
+
+# target to preprocess a source file
+src/hillclimb/hillclimb.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hillclimb/hillclimb.cpp.i
+.PHONY : src/hillclimb/hillclimb.cpp.i
+
+src/hillclimb/hillclimb.s: src/hillclimb/hillclimb.cpp.s
+.PHONY : src/hillclimb/hillclimb.s
+
+# target to generate assembly for a file
+src/hillclimb/hillclimb.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/hillclimb/hillclimb.cpp.s
+.PHONY : src/hillclimb/hillclimb.cpp.s
+
 src/hillclimb/stochastic.o: src/hillclimb/stochastic.cpp.o
 .PHONY : src/hillclimb/stochastic.o
 
@@ -237,6 +261,9 @@ help:
 	@echo "... src/cube/magicfive.o"
 	@echo "... src/cube/magicfive.i"
 	@echo "... src/cube/magicfive.s"
+	@echo "... src/hillclimb/hillclimb.o"
+	@echo "... src/hillclimb/hillclimb.i"
+	@echo "... src/hillclimb/hillclimb.s"
 	@echo "... src/hillclimb/stochastic.o"
 	@echo "... src/hillclimb/stochastic.i"
 	@echo "... src/hillclimb/stochastic.s"
