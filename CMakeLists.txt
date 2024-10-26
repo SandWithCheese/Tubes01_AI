@@ -9,4 +9,5 @@ add_executable(main
                src/solver/solver.cpp
                src/hillclimb/hillclimb.cpp
                src/hillclimb/stochastic.cpp
-               src/advanced/genetic.cpp)
+               src/advanced/genetic.cpp
+               src/hillclimb/randomrestart.cpp)
