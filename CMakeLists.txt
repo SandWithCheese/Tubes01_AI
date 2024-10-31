@@ -10,4 +10,5 @@ add_executable(main
                src/hillclimb/hillclimb.cpp
                src/hillclimb/stochastic.cpp
                src/advanced/genetic.cpp
-               src/hillclimb/randomrestart.cpp)
+               src/hillclimb/randomrestart.cpp
+               src/advanced/simulatedannealing.cpp)
