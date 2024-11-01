@@ -8,9 +8,9 @@ class SidewaysMove : public HillClimb {
 public:
     SidewaysMove(int maxSidewaysMoves);
     SidewaysMove(const MagicFive& other, int maxSidewaysMoves);
-    virtual ~SidewaysMove();
+    ~SidewaysMove();
 
-    virtual void solve() override;
+    void solve() override;
 
 private:
     int maxSidewaysMoves;

@@ -8,9 +8,9 @@ class SteepestAscent : public HillClimb {
 public:
     SteepestAscent();
     SteepestAscent(const MagicFive& other);
-    virtual ~SteepestAscent();
+    ~SteepestAscent();
 
-    virtual void solve() override;
+    void solve() override;
 };
 
 #endif
