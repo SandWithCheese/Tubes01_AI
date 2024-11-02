@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include "cube/magicfive.hpp"
 #include "hillclimb/stochastic.hpp"
 #include "hillclimb/randomrestart.hpp"
@@ -9,6 +10,7 @@
 #include "advanced/genetic.hpp"
 
 using namespace std;
+using namespace std::chrono;
 
 int main() {
     MagicFive cube;
@@ -31,6 +33,8 @@ int main() {
         }
     }
 
+    auto start = high_resolution_clock::now();
+
     switch (choice) {
         case 1: {
             SteepestAscent sa = SteepestAscent(cube);
@@ -38,12 +42,12 @@ int main() {
             break;
         }
         case 2: {
-            SidewaysMove sm = SidewaysMove(cube, 1000); // Dummy value
-            sm.solve(); // Immplement
+            SidewaysMove sm = SidewaysMove(cube, 10000); 
+            sm.solve(); 
             break;
         }
         case 3: {
-            RandomRestart rr = RandomRestart(cube, 1000); // Dummy value
+            RandomRestart rr = RandomRestart(cube, 10000); 
             rr.solve();
             break;
         }
@@ -69,5 +73,10 @@ int main() {
         }
 
     }
+
+    auto stop = high_resolution_clock::now(); 
+    auto duration = duration_cast<milliseconds>(stop - start); 
+    cout << "Execution time: " << duration.count() << " ms" << endl;
+
     return 0;
 }
