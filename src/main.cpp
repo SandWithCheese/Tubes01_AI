@@ -7,8 +7,20 @@
 #include "hillclimb/sidewaysmove.hpp"
 #include "advanced/simulatedannealing.hpp"
 #include "advanced/genetic.hpp"
+#include <GL/glut.h>
+#include "visualize/visualize.hpp"
 
 using namespace std;
+
+// int main(int argc, char** argv) {
+//     MagicFive cube;
+
+//     std::cout << "Initializing visualization..." << std::endl;
+//     Visualize::initVisualization(argc, argv, &cube);
+
+//     return 0;
+// }
+
 
 int main() {
     MagicFive cube;
@@ -26,47 +38,48 @@ int main() {
             cout << "6. Genetic Algorithm" << endl;
             cout << "Choice: ";
             cin >> choice;
-        } catch (const exception& e) {
+        }
+        catch (const exception& e) {
             cout << "Invalid input. Please try again." << endl;
         }
     }
 
     switch (choice) {
-        case 1: {
-            SteepestAscent sa = SteepestAscent(cube);
-            sa.solve();
-            break;
-        }
-        case 2: {
-            SidewaysMove sm = SidewaysMove(cube, 1000); // Dummy value
-//            sm.solve(); // Immplement
-            break;
-        }
-        case 3: {
-            RandomRestart rr = RandomRestart(cube, 1000); // Dummy value
-            rr.solve();
-            break;
-        }
-        case 4: {
-            Stochastic st = Stochastic(cube);
-            st.solve();
-            break;
-        }
-        case 5: {
-            SimulatedAnnealing sa = SimulatedAnnealing(cube, 1000, 0.001, 0.5); // Dummy value
-            sa.solve();
-            break;
-        }
-        case 6: {
-            Genetic gen = Genetic(cube); // Dummy value
-            gen.solve();
-            break;
-        }
-        default : {
-            Stochastic st = Stochastic(cube);
-            st.solve();
-            break;
-        }
+    case 1: {
+        SteepestAscent sa = SteepestAscent(cube);
+        sa.solve();
+        break;
+    }
+    case 2: {
+        SidewaysMove sm = SidewaysMove(cube, 1000); // Dummy value
+        //            sm.solve(); // Immplement
+        break;
+    }
+    case 3: {
+        RandomRestart rr = RandomRestart(cube, 1000); // Dummy value
+        rr.solve();
+        break;
+    }
+    case 4: {
+        Stochastic st = Stochastic(cube);
+        st.solve();
+        break;
+    }
+    case 5: {
+        SimulatedAnnealing sa = SimulatedAnnealing(cube, 1000, 0.001, 0.5); // Dummy value
+        sa.solve();
+        break;
+    }
+    case 6: {
+        Genetic gen = Genetic(cube); // Dummy value
+        gen.solve();
+        break;
+    }
+    default: {
+        Stochastic st = Stochastic(cube);
+        st.solve();
+        break;
+    }
 
     }
     return 0;
