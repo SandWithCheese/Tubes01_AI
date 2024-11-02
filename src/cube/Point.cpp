@@ -1,7 +1,8 @@
+#include <string>
 #include "Point.hpp"
 
-Point::Point(int level, int col) {
-    this->level = level;
+Point::Point(int row, int col) {
+    this->row = row;
     this->col = col;
 }
 
@@ -9,19 +10,25 @@ void Point::setCol(int col) {
     this->col = col;
 }
 
-void Point::setLevel(int level) {
-    this->level = level;
+void Point::setRow(int row) {
+    this->row = row;
 }
 
 int Point::getCol() {
     return this->col;
 }
 
-int Point::getLevel() {
-    return this->level;
+int Point::getRow() {
+    return this->row;
 }
 
 bool Point::operator<(const Point& other) const {
-    if (level != other.level) return level < other.level;
-    return col < other.col;
+    if (row == other.row) {
+        return col < other.col;
+    }
+    return row < other.row;
+}
+
+bool Point::operator==(const Point& other) const {
+    return (row == other.row && col == other.col);
 }
