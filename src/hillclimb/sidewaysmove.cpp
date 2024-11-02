@@ -55,7 +55,7 @@ void SidewaysMove::solve() {
     } while (improved);  // lanjut kalo ada tetangga yang better dan belum mencapai batas sideways moves
 
     // result objective function
-    std::cout << "Objective function: " << currentScore << std::endl;
+    std::cout << "Final objective function: " << currentScore << std::endl;
     std::cout << "Total iterations: " << count << std::endl;
 
     // final cube
