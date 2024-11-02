@@ -81,7 +81,7 @@ int MagicFive::checkColumn() const {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < rows; j++) {
             int col_sum = 0;
-            for (int k = j; k <= cols; k+=5) {
+            for (int k = j; k <= cols; k += 5) {
                 col_sum += data[i][k];
             }
             if (col_sum != MAGIC_NUMBER) {
@@ -196,11 +196,11 @@ set<Point> MagicFive::incorrectPosition() {
     for (int i = 0; i < rows; i++) { // Level
         for (int j = 0; j < rows; j++) { // Ke samping
             int col_sum = 0;
-            for (int k = j; k <= cols; k+=5) { // Ke belakang
+            for (int k = j; k <= cols; k += 5) { // Ke belakang
                 col_sum += data[i][k];
             }
             if (col_sum != MAGIC_NUMBER) {
-                for (int k = j; k <= cols; k+=5) {
+                for (int k = j; k <= cols; k += 5) {
                     incorrectPosition.insert(Point(i, k));
                 }
             }

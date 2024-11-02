@@ -28,6 +28,18 @@ SimulatedAnnealing::SimulatedAnnealing(const MagicFive& other, float temperature
     this->acceptance_probability = acceptance_probability;
 }
 
+vector<float> SimulatedAnnealing::getAcceptanceProbabilities() {
+    return acceptance_probabilities;
+}
+
+void SimulatedAnnealing::setAcceptanceProbabilities(const vector<float>& new_acceptance_probabilities) {
+    acceptance_probabilities = new_acceptance_probabilities;
+}
+
+void SimulatedAnnealing::appendAcceptanceProbability(float new_acceptance_probability) {
+    acceptance_probabilities.push_back(new_acceptance_probability);
+}
+
 vector<vector<int>> SimulatedAnnealing::generateRandomSuccessor() {
     vector<vector<int>> random_successor = cube.getData();
     int i, j, k, l;
@@ -54,10 +66,12 @@ void SimulatedAnnealing::solve() {
     while (temperature > 0 && objCurrent < 0) {
         vector<vector<int>> neighbor = generateRandomSuccessor();
         int objNeighbor = MagicFive(neighbor).objectiveFunction();
+        float probability = acceptanceProbability(objCurrent, objNeighbor);
+        appendAcceptanceProbability(probability);
         if (objNeighbor > objCurrent) {
             cube = MagicFive(neighbor);
             objCurrent = objNeighbor;
-        } else if (acceptanceProbability(objCurrent, objNeighbor) > (float)rand() / RAND_MAX) {
+        } else if (probability > (float)rand() / RAND_MAX) {
             cube = MagicFive(neighbor);
             objCurrent = objNeighbor;
         }

@@ -51,6 +51,7 @@ int main() {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = sa.getObjectiveFunctions();
             break;
         }
         case 2: {
@@ -62,6 +63,7 @@ int main() {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sm.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = sm.getObjectiveFunctions();
             break;
         }
         case 3: {
@@ -73,6 +75,7 @@ int main() {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(rr.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = rr.getObjectiveFunctions();
             break;
         }
         case 4: {
@@ -84,10 +87,11 @@ int main() {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(st.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = st.getObjectiveFunctions();
             break;
         }
         case 5: {
-            SimulatedAnnealing sa = SimulatedAnnealing(cube, 10000, 0.001, 1); // Dummy value
+            SimulatedAnnealing sa = SimulatedAnnealing(cube, 10000000, 1, 1); // Dummy value
             start = high_resolution_clock::now();
             sa.solve();
             stop = high_resolution_clock::now();
@@ -95,6 +99,7 @@ int main() {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
+            vector<float> obj = sa.getAcceptanceProbabilities();
             break;
         }
         case 6: {
@@ -106,6 +111,9 @@ int main() {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(gen.getCube().getData());
             solvedCube.showCube();
+            vector<int> max_obj = gen.getMaxObjectiveFunctions();
+            vector<int> avg_obj = gen.getAvgObjectiveFunctions();
+            cout << max_obj.size() << " " << avg_obj.size() << endl;
             break;
         }
         case 7: {
