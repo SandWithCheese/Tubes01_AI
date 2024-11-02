@@ -42,9 +42,9 @@ void SidewaysMove::solve() {
         if (improved) {
             cube.setData(MagicFive::listToMatrix(bestSuccessorData));  // ambil suksesor best value
             currentScore = bestScore;
+            std::cout << "Objective function: " << currentScore << std::endl;
+            count++;
         }
-
-        count++;
 
         // cek apakah sudah mencapai batas sideways moves
         if (sidewaysMoves >= maxSidewaysMoves) {
