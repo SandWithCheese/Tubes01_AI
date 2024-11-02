@@ -39,7 +39,7 @@ int main() {
         }
         case 2: {
             SidewaysMove sm = SidewaysMove(cube, 1000); // Dummy value
-           sm.solve(); // Immplement
+            sm.solve(); // Immplement
             break;
         }
         case 3: {
