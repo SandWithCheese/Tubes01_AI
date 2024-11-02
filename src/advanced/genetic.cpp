@@ -26,6 +26,30 @@ Genetic::Genetic(const MagicFive& other, int iterations, int population_size, in
 
 Genetic::~Genetic() {}
 
+vector<int> Genetic::getMaxObjectiveFunctions() {
+    return max_objective_functions;
+}
+
+vector<int> Genetic::getAvgObjectiveFunctions() {
+    return avg_objective_functions;
+}
+
+void Genetic::setMaxObjectiveFunctions(const vector<int>& new_objective_functions) {
+    max_objective_functions = new_objective_functions;
+}
+
+void Genetic::setAvgObjectiveFunctions(const vector<int>& new_objective_functions) {
+    avg_objective_functions = new_objective_functions;
+}
+
+void Genetic::appendMaxObjectiveFunction(int new_objective_function) {
+    max_objective_functions.push_back(new_objective_function);
+}
+
+void Genetic::appendAvgObjectFunction(int new_objective_function) {
+    avg_objective_functions.push_back(new_objective_function);
+}
+
 int Genetic::getIterations() {
     return iterations;
 }
@@ -120,6 +144,8 @@ void Genetic::solve() {
 
     for (int i = 0; i < iterations; i++) {
         vector<MagicFive> new_populations;
+        int max_objective_function = -109;
+        int avg_objective_function = 0;
         for (int j = 0; j < population_size; j++) {
             MagicFive parent1 = selection(populations);
             MagicFive parent2 = selection(populations);
@@ -129,42 +155,30 @@ void Genetic::solve() {
 
             int child1_mutation = rand() % 100;
             if (child1_mutation < threshold) {
-                MagicFive mutated_child1 = mutation(child1);
-                new_populations.push_back(mutated_child1);
-
-                if (mutated_child1.fitnessFunction() == 0) {
-                    found = true;
-                    break;
-                }
+                child1 = mutation(child1);
             }
-            else {
-                new_populations.push_back(child1);
 
-                if (child1.fitnessFunction() == 0) {
-                    found = true;
-                    break;
-                }
-            }
+            new_populations.push_back(child1);
 
             int child2_mutation = rand() % 100;
             if (child2_mutation < threshold) {
-                MagicFive mutated_child2 = mutation(child2);
-                new_populations.push_back(mutated_child2);
-
-                if (mutated_child2.fitnessFunction() == 0) {
-                    found = true;
-                    break;
-                }
+                child2 = mutation(child2);
             }
-            else {
-                new_populations.push_back(child2);
 
-                if (child2.fitnessFunction() == 0) {
-                    found = true;
-                    break;
-                }
+            new_populations.push_back(child2);
+
+            if (child1.fitnessFunction() == 109 || child2.fitnessFunction() == 109) {
+                found = true;
             }
+
+            max_objective_function = max(max_objective_function, max(child1.objectiveFunction(), child2.objectiveFunction()));
+            avg_objective_function += (child1.objectiveFunction() + child2.objectiveFunction());
         }
+
+        avg_objective_function /= (population_size * 2);
+
+        appendMaxObjectiveFunction(max_objective_function);
+        appendAvgObjectFunction(avg_objective_function);
 
         populations = new_populations;
 

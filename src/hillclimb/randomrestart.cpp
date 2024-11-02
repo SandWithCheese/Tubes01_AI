@@ -6,6 +6,7 @@ RandomRestart::RandomRestart(const MagicFive& other) : HillClimb(other) {}
 
 void RandomRestart::solve() {
     int best_objective = cube.objectiveFunction();
+    appendObjectiveFunction(best_objective);
     vector<vector<int>> best_data = cube.getData();
     int restarts = 0;
 
@@ -34,6 +35,8 @@ void RandomRestart::solve() {
                 cube.setData(MagicFive::listToMatrix(bestSuccessorData));  // ambil suksesor best value 
                 currentScore = bestScore;
             }
+
+            appendObjectiveFunction(currentScore);
 
         } while (improved);  // lanjut kalo ada tetangga yang better
 

@@ -9,6 +9,7 @@
 #include "advanced/simulatedannealing.hpp"
 #include "advanced/genetic.hpp"
 #include "visualize/magic_cube.cpp"
+#include "plt/plot.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -52,6 +53,8 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = sa.getObjectiveFunctions();
+            Plot::plotObjectiveFunctions(obj);
             break;
         }
         case 2: {
@@ -63,6 +66,8 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sm.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = sm.getObjectiveFunctions();
+            Plot::plotObjectiveFunctions(obj);
             break;
         }
         case 3: {
@@ -74,6 +79,8 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(rr.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = rr.getObjectiveFunctions();
+            Plot::plotObjectiveFunctions(obj);
             break;
         }
         case 4: {
@@ -85,10 +92,12 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(st.getCube().getData());
             solvedCube.showCube();
+            vector<int> obj = st.getObjectiveFunctions();
+            Plot::plotObjectiveFunctions(obj);
             break;
         }
         case 5: {
-            SimulatedAnnealing sa = SimulatedAnnealing(cube, 10000, 0.001, 1); // Dummy value
+            SimulatedAnnealing sa = SimulatedAnnealing(cube, 10000000, 1, 0.5); // Dummy value
             start = high_resolution_clock::now();
             sa.solve();
             stop = high_resolution_clock::now();
@@ -96,6 +105,8 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
+            vector<float> obj = sa.getAcceptanceProbabilities();
+            Plot::plotAcceptanceProbabilities(obj);
             break;
         }
         case 6: {
@@ -107,6 +118,10 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(gen.getCube().getData());
             solvedCube.showCube();
+            vector<int> max_obj = gen.getMaxObjectiveFunctions();
+            vector<int> avg_obj = gen.getAvgObjectiveFunctions();
+            Plot::plotMaxObjectiveFunctions(max_obj);
+            Plot::plotAvgObjectiveFunctions(avg_obj);
             break;
         }
         case 7: {

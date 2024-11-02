@@ -13,6 +13,7 @@ SidewaysMove::~SidewaysMove() {}
 
 void SidewaysMove::solve() {
     int currentScore = cube.objectiveFunction();
+    appendObjectiveFunction(currentScore);
     int sidewaysMoves = 0;
     bool improved;
 
@@ -56,6 +57,8 @@ void SidewaysMove::solve() {
             count++;
             sidewaysMoves++;
         }
+
+        appendObjectiveFunction(currentScore);
 
         // cek apakah sudah mencapai batas sideways moves
         if (sidewaysMoves >= maxSidewaysMoves) {
