@@ -5,6 +5,8 @@
 #include <iostream>
 #include <random>
 #include <algorithm>
+#include <set>
+#include "Point.hpp"
 
 using namespace std;
 
@@ -41,6 +43,7 @@ public:
     int objectiveFunction() const;
     int fitnessFunction() const;
 
+    set<Point> incorrectPosition();
     void showCube();
 };
 

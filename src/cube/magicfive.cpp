@@ -78,13 +78,15 @@ int MagicFive::checkRow() const {
 int MagicFive::checkColumn() const {
     int heuristic = 0;
 
-    for (int i = 0; i < cols; ++i) {
-        int col_sum = 0;
-        for (int j = 0; j < rows; ++j) {
-            col_sum += data[j][i];
-        }
-        if (col_sum != MAGIC_NUMBER) {
-            heuristic++;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < rows; j++) {
+            int col_sum = 0;
+            for (int k = j; k <= cols; k+=5) {
+                col_sum += data[i][k];
+            }
+            if (col_sum != MAGIC_NUMBER) {
+                heuristic++;
+            }
         }
     }
 
@@ -111,10 +113,10 @@ int MagicFive::checkSpaceDiagonal() const {
     int heuristic = 0;
     // Four diagonals
     vector<int> diags = {
-        data[0][0] + data[1][6] + data[2][12] + data[3][18] + data[4][24],
-        data[0][4] + data[1][8] + data[2][12] + data[3][16] + data[4][20],
-        data[0][20] + data[1][16] + data[2][12] + data[3][8] + data[4][4],
-        data[0][24] + data[1][18] + data[2][12] + data[3][6] + data[4][0]
+            data[0][0] + data[1][6] + data[2][12] + data[3][18] + data[4][24],
+            data[0][4] + data[1][8] + data[2][12] + data[3][16] + data[4][20],
+            data[0][20] + data[1][16] + data[2][12] + data[3][8] + data[4][4],
+            data[0][24] + data[1][18] + data[2][12] + data[3][6] + data[4][0]
     };
 
     for (const auto& diag : diags) {
@@ -171,4 +173,53 @@ void MagicFive::showCube() {
         }
         cout << endl;
     }
+}
+
+set<Point> MagicFive::incorrectPosition() {
+    set<Point> incorrectPosition;
+
+    // Row
+    int currRow = 0;
+    for (const auto& row : data) { // Level
+        for (int j = 0; j < cols; j += 5) { // Ke belakang
+            int row_sum = accumulate(row.begin() + j, row.begin() + j + 5, 0);
+            if (row_sum != MAGIC_NUMBER) {
+                for (int k = j; k < j + 5; k++) { // Ke samping
+                    incorrectPosition.insert(Point(currRow, k));
+                }
+            }
+        }
+        currRow++;
+    }
+
+    // Column
+    for (int i = 0; i < rows; i++) { // Level
+        for (int j = 0; j < rows; j++) { // Ke samping
+            int col_sum = 0;
+            for (int k = j; k <= cols; k+=5) { // Ke belakang
+                col_sum += data[i][k];
+            }
+            if (col_sum != MAGIC_NUMBER) {
+                for (int k = j; k <= cols; k+=5) {
+                    incorrectPosition.insert(Point(i, k));
+                }
+            }
+        }
+    }
+
+    // Pillar
+    for (int i = 0; i < cols; ++i) { // Ke setiap item di sebuah level
+        int pillar_sum = 0;
+        for (int j = 0; j < rows; ++j) {
+            pillar_sum += data[j][i];
+        }
+        if (pillar_sum != MAGIC_NUMBER) {
+            for (int j = 0; j < rows; j++) { // Level
+                incorrectPosition.insert(Point(j, i));
+            }
+        }
+    }
+
+    return incorrectPosition;
+
 }

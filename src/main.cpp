@@ -24,7 +24,7 @@ int main() {
             cout << "4. Hill Climbing: Stochastic" << endl;
             cout << "5. Simulated Annealing" << endl;
             cout << "6. Genetic Algorithm" << endl;
-            cout << "Choice: ";
+            cout << "Choice:";
             cin >> choice;
         } catch (const exception& e) {
             cout << "Invalid input. Please try again." << endl;
@@ -53,7 +53,7 @@ int main() {
             break;
         }
         case 5: {
-            SimulatedAnnealing sa = SimulatedAnnealing(cube, 1000, 0.001, 0.5); // Dummy value
+            SimulatedAnnealing sa = SimulatedAnnealing(cube, 10000, 0.001, 1); // Dummy value
             sa.solve();
             break;
         }

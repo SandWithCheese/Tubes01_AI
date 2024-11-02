@@ -13,4 +13,5 @@ add_executable(main
                src/hillclimb/randomrestart.cpp
                src/advanced/simulatedannealing.cpp
                src/hillclimb/steepestascent.cpp
-               src/hillclimb/sidewaysmove.cpp)
+               src/hillclimb/sidewaysmove.cpp
+               src/cube/Point.cpp)

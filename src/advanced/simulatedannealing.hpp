@@ -10,6 +10,12 @@
 
 using namespace std;
 
+/**
+ * Kelas solver Simulated Annealing
+ * @param temperature
+ * @param cooling_rate: penurunan temperature setiap iterasi. Penurunan dengan mengurangi temperature dengan cooling rate)
+ * @param acceptance_probability: batas apakah state diterima jika objective function neighbor lebih kecil
+ */
 class SimulatedAnnealing : public Solver {
 private:
     float temperature;
