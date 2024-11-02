@@ -55,7 +55,7 @@ int main() {
             break;
         }
         case 2: {
-            SidewaysMove sm = SidewaysMove(cube, 10000); // Dummy value
+            SidewaysMove sm = SidewaysMove(cube, 1000); // Dummy value
             start = high_resolution_clock::now();
             sm.solve(); // Immplement
             stop = high_resolution_clock::now();
@@ -67,7 +67,7 @@ int main() {
             break;
         }
         case 3: {
-            RandomRestart rr = RandomRestart(cube, 10000);
+            RandomRestart rr = RandomRestart(cube);
             start = high_resolution_clock::now();
             rr.solve();
             stop = high_resolution_clock::now();

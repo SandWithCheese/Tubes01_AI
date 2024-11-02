@@ -1,11 +1,13 @@
 #include "sidewaysmove.hpp"
 #include <iostream>
 
-SidewaysMove::SidewaysMove(int maxSidewaysMoves) 
-    : HillClimb(), maxSidewaysMoves(maxSidewaysMoves) {}
+SidewaysMove::SidewaysMove(int maxSidewaysMoves)
+    : HillClimb(), maxSidewaysMoves(maxSidewaysMoves) {
+}
 
-SidewaysMove::SidewaysMove(const MagicFive& other, int maxSidewaysMoves) 
-    : HillClimb(other), maxSidewaysMoves(maxSidewaysMoves) {}
+SidewaysMove::SidewaysMove(const MagicFive& other, int maxSidewaysMoves)
+    : HillClimb(other), maxSidewaysMoves(maxSidewaysMoves) {
+}
 
 SidewaysMove::~SidewaysMove() {}
 
@@ -21,7 +23,9 @@ void SidewaysMove::solve() {
         improved = false;
         std::vector<std::vector<int>> successors = generateSuccessors();
         std::vector<int> bestSuccessorData = cube.matrixToList(cube.getData());
+        std::vector<int> bestSidewayData = cube.matrixToList(cube.getData());
         int bestScore = currentScore;
+        int bestSidewayScore = currentScore;
 
         for (const auto& successor : successors) {
             cube.setData(MagicFive::listToMatrix(successor)); // generate suksesor
@@ -32,19 +36,26 @@ void SidewaysMove::solve() {
                 bestScore = newScore;
                 sidewaysMoves = 0;  // reset sideways move count kalau ada yang lebih baik
                 improved = true;
-            } else if (newScore == currentScore && sidewaysMoves < maxSidewaysMoves) {
-                bestSuccessorData = successor;
-                sidewaysMoves++; 
-                improved = true;
+            }
+            else if (newScore == currentScore && sidewaysMoves < maxSidewaysMoves) {
+                bestSidewayData = successor;
+                bestSidewayScore = newScore;
             }
         }
 
         if (improved) {
             cube.setData(MagicFive::listToMatrix(bestSuccessorData));  // ambil suksesor best value
             currentScore = bestScore;
+            std::cout << "Objective function: " << currentScore << std::endl;
+            count++;
         }
-
-        count++;
+        else if (sidewaysMoves < maxSidewaysMoves) {
+            improved = true;
+            cube.setData(MagicFive::listToMatrix(bestSidewayData));  // ambil suksesor best value
+            currentScore = bestSidewayScore;
+            count++;
+            sidewaysMoves++;
+        }
 
         // cek apakah sudah mencapai batas sideways moves
         if (sidewaysMoves >= maxSidewaysMoves) {
@@ -55,7 +66,7 @@ void SidewaysMove::solve() {
     } while (improved);  // lanjut kalo ada tetangga yang better dan belum mencapai batas sideways moves
 
     // result objective function
-    std::cout << "Objective function: " << currentScore << std::endl;
+    std::cout << "Final objective function: " << currentScore << std::endl;
     std::cout << "Total iterations: " << count << std::endl;
 
     // final cube
@@ -70,7 +81,8 @@ void SidewaysMove::solve() {
     // optimal global or not
     if (currentScore == 0) {
         std::cout << "Optimal solution found." << std::endl;
-    } else {
+    }
+    else {
         std::cout << "Optimal solution not found." << std::endl;
     }
 }
