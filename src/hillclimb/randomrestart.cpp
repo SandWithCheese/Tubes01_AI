@@ -18,7 +18,7 @@ void RandomRestart::solve() {
         int current_obj = cube.objectiveFunction();
         
         while (current_obj != 0) {
-            vector<vector<int>> successor_data = generateRandomSuccessor(); // Tetangga acak
+            vector<vector<int>> successor_data = generateSuccessors(); // Tetangga best value
             MagicFive successor(successor_data);
             int successor_obj = successor.objectiveFunction();
 
