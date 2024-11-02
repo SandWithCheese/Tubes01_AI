@@ -5,7 +5,7 @@ Stochastic::Stochastic(const MagicFive& other) : HillClimb(other) {}
 
 void Stochastic::solve() {
     int iterations = 0;
-    while (true) {
+    while (iterations < 500000) {
         vector<vector<int>> current_cube = cube.getData();
         int current_obj = cube.objectiveFunction();
 
@@ -26,4 +26,6 @@ void Stochastic::solve() {
             break;
         }
     }
+
+    cout << "Solution found in " << iterations << " iterations." << endl;
 }
