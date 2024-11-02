@@ -1,12 +1,8 @@
 #include "randomrestart.hpp"
 
-RandomRestart::RandomRestart(int max_restart) : HillClimb() {
-    this->max_restart = max_restart;
-}
+RandomRestart::RandomRestart() : HillClimb() {}
 
-RandomRestart::RandomRestart(const MagicFive& other, int max_restart) : HillClimb(other) {
-    this->max_restart = max_restart;
-}
+RandomRestart::RandomRestart(const MagicFive& other) : HillClimb(other) {}
 
 void RandomRestart::solve() {
     int best_objective = cube.objectiveFunction();
@@ -14,28 +10,40 @@ void RandomRestart::solve() {
     int restarts = 0;
 
     while (restarts < this->max_restart) {
-        cube = MagicFive();  // Random Initial State
-        int current_obj = cube.objectiveFunction();
-        
-        while (current_obj != 0) {
-            vector<vector<int>> successor_data = generateRandomSuccessor(); // Tetangga acak
-            MagicFive successor(successor_data);
-            int successor_obj = successor.objectiveFunction();
+        int currentScore = cube.objectiveFunction();  // current cube's objective score
+        bool improved;
 
-            if (successor_obj > current_obj) {
-                current_obj = successor_obj;
-                cube.setData(successor_data);
-            } else {
-                break;
+        do {
+            improved = false;
+            vector<vector<int>> successors = generateSuccessors();
+            vector<int> bestSuccessorData = cube.matrixToList(cube.getData());
+            int bestScore = currentScore;
+
+            for (const auto& successor : successors) {
+                cube.setData(MagicFive::listToMatrix(successor));  // generate suksesor
+                int newScore = cube.objectiveFunction();
+
+                if (newScore > bestScore) {
+                    bestSuccessorData = successor;
+                    bestScore = newScore;
+                    improved = true;
+                }
             }
-        }
 
-        int current_objective = cube.objectiveFunction();
-        if (current_objective > best_objective) {
-            best_objective = current_objective;
+            if (improved) {
+                cube.setData(MagicFive::listToMatrix(bestSuccessorData));  // ambil suksesor best value 
+                currentScore = bestScore;
+            }
+
+        } while (improved);  // lanjut kalo ada tetangga yang better
+
+        if (currentScore > best_objective) {
+            best_objective = currentScore;
             best_data = cube.getData();
         }
 
+        // Restart the cube with random values
+        cube = MagicFive();
         restarts++;
 
         if (best_objective == 0) {
@@ -48,5 +56,13 @@ void RandomRestart::solve() {
     if (best_objective != 0) {
         cout << "Best solution found after " << this->max_restart << " restarts." << endl;
         cout << "Objective function: " << best_objective << endl;
+    }
+
+    cout << "Solution matrix:" << endl;
+    for (const auto& row : cube.getData()) {
+        for (int element : row) {
+            cout << element << " ";
+        }
+        cout << endl;
     }
 }

@@ -1,17 +1,21 @@
 #ifndef POINT
 #define POINT
 
+#include <set>
+#include <string>
+using namespace std;
 class Point {
 public:
-    int level;
+    int row;
     int col;
 
-    Point(int level, int col);
-    void setLevel(int level);
+    Point(int row, int col);
+    void setRow(int row);
     void setCol(int col);
-    int getLevel();
+    int getRow();
     int getCol();
     bool operator<(const Point& other) const;
+    bool operator ==(const Point& other) const;
 };
 
 #endif
