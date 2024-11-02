@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include "cube/magicfive.hpp"
 #include "hillclimb/stochastic.hpp"
 #include "hillclimb/randomrestart.hpp"
@@ -9,11 +10,14 @@
 #include "advanced/genetic.hpp"
 
 using namespace std;
+using namespace std::chrono;
 
 int main() {
     MagicFive cube;
     cube.showCube();
     MagicFive solvedCube;
+    high_resolution_clock::time_point start, stop;
+    milliseconds duration;
 
     while (true) {
         int choice = 0;
@@ -40,42 +44,66 @@ int main() {
         switch (choice) {
         case 1: {
             SteepestAscent sa = SteepestAscent(cube);
+            start = high_resolution_clock::now();
             sa.solve();
+            stop = high_resolution_clock::now();
+            duration = duration_cast<milliseconds>(stop - start);
+            cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
             break;
         }
         case 2: {
-            SidewaysMove sm = SidewaysMove(cube, 1000); // Dummy value
+            SidewaysMove sm = SidewaysMove(cube, 10000); // Dummy value
+            start = high_resolution_clock::now();
             sm.solve(); // Immplement
+            stop = high_resolution_clock::now();
+            duration = duration_cast<milliseconds>(stop - start);
+            cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sm.getCube().getData());
             solvedCube.showCube();
             break;
         }
         case 3: {
-            RandomRestart rr = RandomRestart(cube, 1000); // Dummy value
+            RandomRestart rr = RandomRestart(cube, 10000);
+            start = high_resolution_clock::now();
             rr.solve();
+            stop = high_resolution_clock::now();
+            duration = duration_cast<milliseconds>(stop - start);
+            cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(rr.getCube().getData());
             solvedCube.showCube();
             break;
         }
         case 4: {
             Stochastic st = Stochastic(cube);
+            start = high_resolution_clock::now();
             st.solve();
+            stop = high_resolution_clock::now();
+            duration = duration_cast<milliseconds>(stop - start);
+            cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(st.getCube().getData());
             solvedCube.showCube();
             break;
         }
         case 5: {
             SimulatedAnnealing sa = SimulatedAnnealing(cube, 10000, 0.001, 1); // Dummy value
+            start = high_resolution_clock::now();
             sa.solve();
+            stop = high_resolution_clock::now();
+            duration = duration_cast<milliseconds>(stop - start);
+            cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
             break;
         }
         case 6: {
             Genetic gen = Genetic(cube); // Dummy value
+            start = high_resolution_clock::now();
             gen.solve();
+            stop = high_resolution_clock::now();
+            duration = duration_cast<milliseconds>(stop - start);
+            cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(gen.getCube().getData());
             solvedCube.showCube();
             break;
