@@ -9,6 +9,9 @@ void SteepestAscent::solve() {
     int currentScore = cube.objectiveFunction();  // current cube's objective score
     bool improved;
 
+    // buat hitung iterasi
+    int count = 0;
+
     do {
         improved = false;
         vector<vector<int>> successors = generateSuccessors();
@@ -29,12 +32,15 @@ void SteepestAscent::solve() {
         if (improved) {
             cube.setData(MagicFive::listToMatrix(bestSuccessorData));  // ambil suksesor best value 
             currentScore = bestScore;
+            cout << "Objective function: " << currentScore << endl;
+            count++;
         }
 
     } while (improved);  // lanjut kalo ada tetangga yang better
 
     // result objective function 
     std::cout << "Objective function: " << currentScore << std::endl;
+    std::cout << "Total iterations: " << count << std::endl;
 
     // final cube
     std::cout << "Solution matrix:" << std::endl;
