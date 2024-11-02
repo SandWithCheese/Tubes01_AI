@@ -8,12 +8,13 @@
 #include "hillclimb/sidewaysmove.hpp"
 #include "advanced/simulatedannealing.hpp"
 #include "advanced/genetic.hpp"
+#include "visualize/magic_cube.cpp"
 #include "plt/plot.hpp"
 
 using namespace std;
 using namespace std::chrono;
 
-int main() {
+int main(int argc, char** argv) {
     MagicFive cube;
     cube.showCube();
     MagicFive solvedCube;
@@ -125,6 +126,8 @@ int main() {
         }
         case 7: {
             cout << "Visualisasi" << endl;
+            solvedCube.showCube();
+            CubeVisualizer::visualize(argc, argv, solvedCube);
             break;
         }
         case 8: {

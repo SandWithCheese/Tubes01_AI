@@ -1,60 +1,142 @@
-#include <GL/glut.h>
+#include <GL/freeglut.h>
 #include <vector>
 #include <random>
 #include <algorithm>
 #include <string>
 #include <cmath>
+#include "../cube/magicfive.hpp"
 
-// Structure to store cube properties
-struct CubeCell {
-    int number;
-    float x, y, z;
-    bool highlighted;  // New property for highlighting state
-};
+using namespace std;
 
-// Global variables
-std::vector<CubeCell> cells;
-float rotationX = 0.0f;
-float rotationY = 0.0f;
-float distance = -30.0f;
+class CubeVisualizer {
+private:
+    // Structure to store cube properties
+    struct CubeCell {
+        int number;
+        float x, y, z;
+        bool highlighted;
+    };
 
-// Mouse interaction variables
-bool mouseLeftDown = false;
-bool mouseRightDown = false;
-int mouseX = 0, mouseY = 0;
-float mouseRotationSensitivity = 0.5f;
-float mouseZoomSensitivity = 0.1f;
+    // Static member variables
+    static std::vector<CubeCell> cells;
+    static float rotationX;
+    static float rotationY;
+    static float distance;
 
-// Colors for the cube faces with reduced opacity
-const GLfloat colors[][4] = {
-    {0.8f, 0.2f, 0.2f, 0.3f},  // Red with 0.3 opacity
-    {0.2f, 0.8f, 0.2f, 0.3f},  // Green with 0.3 opacity
-    {0.2f, 0.2f, 0.8f, 0.3f},  // Blue with 0.3 opacity
-    {0.8f, 0.8f, 0.2f, 0.3f},  // Yellow with 0.3 opacity
-    {0.8f, 0.2f, 0.8f, 0.3f},  // Magenta with 0.3 opacity
-    {0.2f, 0.8f, 0.8f, 0.3f}   // Cyan with 0.3 opacity
-};
+    // Mouse interaction variables
+    static bool mouseLeftDown;
+    static bool mouseRightDown;
+    static int mouseX, mouseY;
+    static constexpr float mouseRotationSensitivity = 0.5f;
+    static constexpr float mouseZoomSensitivity = 0.1f;
 
-// Highlight color
-const GLfloat highlightColor[] = {1.0f, 1.0f, 1.0f, 0.5f};  // White with 0.5 opacity
+    // Colors for the cube faces with reduced opacity
+    static constexpr GLfloat colors[][4] = {
+        {0.8f, 0.2f, 0.2f, 0.3f},  // Red
+        {0.2f, 0.8f, 0.2f, 0.3f},  // Green
+        {0.2f, 0.2f, 0.8f, 0.3f},  // Blue
+        {0.8f, 0.8f, 0.2f, 0.3f},  // Yellow
+        {0.8f, 0.2f, 0.8f, 0.3f},  // Magenta
+        {0.2f, 0.8f, 0.8f, 0.3f}   // Cyan
+    };
 
-// Ray structure for picking
-struct Ray {
-    float originX, originY, originZ;
-    float dirX, dirY, dirZ;
-};
+    // Highlight color
+    static constexpr GLfloat highlightColor[] = {1.0f, 1.0f, 1.0f, 0.5f};
 
-// Initialize the cube with random numbers
-void initializeCube() {
-    std::vector<int> numbers(125);
-    for (int i = 0; i < 125; i++) {
-        numbers[i] = i + 1;
+    // Ray structure for picking
+    struct Ray {
+        float originX, originY, originZ;
+        float dirX, dirY, dirZ;
+    };
+
+    // Private static methods
+    static void resetView() {
+        rotationX = 0.0f;
+        rotationY = 0.0f;
+        distance = -30.0f;
     }
+
+    static void clearState() {
+        cells.clear();  // Clear existing cells
+        resetView();    // Reset view parameters
+    }
+
+    // Private static methods
+    static void initializeCube(const MagicFive& cube);
+    static void drawCenteredNumber(const char* str, float size);
+    static void drawSubCube(const CubeCell& cell);
+    static Ray getRayFromMouse(int x, int y);
+    static bool rayIntersectsCube(const Ray& ray, const CubeCell& cell, float size);
+    static void display();
+    static void processClick(int x, int y);
+    static void mouse(int button, int state, int x, int y);
+    static void motion(int x, int y);
+    static void reshape(int w, int h);
+    static void keyboard(unsigned char key, int x, int y);
+
+    public:
+    // Public static method to start visualization
+    static void visualize(int argc, char** argv, MagicFive& cube) {
+        glutInit(&argc, argv);
+        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+        glutInitWindowSize(800, 600);
+        glutCreateWindow("Magic Cube Visualization with Highlighting");
+        glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
+        
+        // Enable necessary OpenGL features
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        
+        // Initialize the cube
+        initializeCube(cube);
+        
+        // Register callback functions
+        glutDisplayFunc(display);
+        glutReshapeFunc(reshape);
+        glutKeyboardFunc(keyboard);
+        glutMouseFunc(mouse);
+        glutMotionFunc(motion);
+        
+        // Print instructions
+        printf("Controls:\n");
+        printf("Left Mouse: Rotate cube (when dragging)\n");
+        printf("Right Mouse: Zoom (when dragging)\n");
+        printf("Middle Mouse: Reset view\n");
+        printf("Mouse Wheel: Zoom in/out\n");
+        printf("Left Click: Select/highlight cube\n");
+        printf("W/S: Rotate up/down\n");
+        printf("A/D: Rotate left/right\n");
+        printf("Q/E: Zoom out/in\n");
+        printf("R: Reset view and clear highlights\n");
+        printf("C: Clear highlights\n");
+        printf("ESC: Exit\n");
+        
+        glutMainLoop();
+    }
+};
+
+// Initialize static member variables
+std::vector<CubeVisualizer::CubeCell> CubeVisualizer::cells;
+float CubeVisualizer::rotationX = 0.0f;
+float CubeVisualizer::rotationY = 0.0f;
+float CubeVisualizer::distance = -30.0f;
+bool CubeVisualizer::mouseLeftDown = false;
+bool CubeVisualizer::mouseRightDown = false;
+int CubeVisualizer::mouseX = 0;
+int CubeVisualizer::mouseY = 0;
+
+// Implementation of private static methods
+void CubeVisualizer::initializeCube(const MagicFive& cube) {
+    clearState();
+    const vector<vector<int>>& data = cube.getData();
     
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::shuffle(numbers.begin(), numbers.end(), gen);
-    
+    vector<int> numbers;
+    for (const auto& row : data) {
+        numbers.insert(numbers.end(), row.begin(), row.end());
+    }
+
     int index = 0;
     float offset = 2.0f;
     for (int x = 0; x < 5; x++) {
@@ -65,15 +147,14 @@ void initializeCube() {
                 cell.x = (x - 2.0f) * offset;
                 cell.y = (y - 2.0f) * offset;
                 cell.z = (z - 2.0f) * offset;
-                cell.highlighted = false;  // Initialize highlight state
+                cell.highlighted = false;
                 cells.push_back(cell);
             }
         }
     }
 }
 
-// Draw a single number centered in the cube
-void drawCenteredNumber(const char* str, float size) {
+void CubeVisualizer::drawCenteredNumber(const char* str, float size) {
     float width = 0;
     for (const char* c = str; *c != '\0'; c++) {
         width += glutStrokeWidth(GLUT_STROKE_MONO_ROMAN, *c);
@@ -98,8 +179,7 @@ void drawCenteredNumber(const char* str, float size) {
     glPopMatrix();
 }
 
-// Draw a single sub-cube
-void drawSubCube(const CubeCell& cell) {
+void CubeVisualizer::drawSubCube(const CubeCell& cell) {
     float size = 0.45f;
     glPushMatrix();
     glTranslatef(cell.x, cell.y, cell.z);
@@ -197,8 +277,7 @@ void drawSubCube(const CubeCell& cell) {
     glPopMatrix();
 }
 
-// Get ray from mouse position
-Ray getRayFromMouse(int x, int y) {
+CubeVisualizer::Ray CubeVisualizer::getRayFromMouse(int x, int y) {
     GLint viewport[4];
     GLdouble modelview[16];
     GLdouble projection[16];
@@ -234,8 +313,7 @@ Ray getRayFromMouse(int x, int y) {
     return ray;
 }
 
-// Check if ray intersects with cube
-bool rayIntersectsCube(const Ray& ray, const CubeCell& cell, float size) {
+bool CubeVisualizer::rayIntersectsCube(const Ray& ray, const CubeCell& cell, float size) {
     float bounds[2][3] = {
         {cell.x - size, cell.y - size, cell.z - size},
         {cell.x + size, cell.y + size, cell.z + size}
@@ -266,8 +344,9 @@ bool rayIntersectsCube(const Ray& ray, const CubeCell& cell, float size) {
     return true;
 }
 
-void display() {
+void CubeVisualizer::display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glLoadIdentity();
     
     glTranslatef(0.0f, 0.0f, distance);
@@ -292,10 +371,11 @@ void display() {
         drawSubCube(cell.second);
     }
     
+    glFlush();
     glutSwapBuffers();
 }
 
-void processClick(int x, int y) {
+void CubeVisualizer::processClick(int x, int y) {
     Ray ray = getRayFromMouse(x, y);
     float minDist = std::numeric_limits<float>::max();
     int selectedIndex = -1;
@@ -326,7 +406,7 @@ void processClick(int x, int y) {
     }
 }
 
-void mouse(int button, int state, int x, int y) {
+void CubeVisualizer::mouse(int button, int state, int x, int y) {
     mouseX = x;
     mouseY = y;
     
@@ -355,7 +435,7 @@ void mouse(int button, int state, int x, int y) {
     }
 }
 
-void motion(int x, int y) {
+void CubeVisualizer::motion(int x, int y) {
     int deltaX = x - mouseX;
     int deltaY = y - mouseY;
     
@@ -374,7 +454,7 @@ void motion(int x, int y) {
 }
 
 // Reshape function
-void reshape(int w, int h) {
+void CubeVisualizer::reshape(int w, int h) {
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -383,7 +463,7 @@ void reshape(int w, int h) {
 }
 
 // Keyboard function for rotation and control
-void keyboard(unsigned char key, int x, int y) {
+void CubeVisualizer::keyboard(unsigned char key, int x, int y) {
     switch (key) {
         case 'w': rotationX += 5.0f; break;
         case 's': rotationX -= 5.0f; break;
@@ -406,48 +486,9 @@ void keyboard(unsigned char key, int x, int y) {
             }
             break;
         case 27:  // ESC key
-            exit(0);
+            glutLeaveMainLoop();
             break;
     }
     glutPostRedisplay();
 }
 
-int main(int argc, char** argv) {
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(800, 600);
-    glutCreateWindow("Magic Cube Visualization with Highlighting");
-    
-    // Enable necessary OpenGL features
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    
-    // Initialize the cube
-    initializeCube();
-    
-    // Register callback functions
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutKeyboardFunc(keyboard);
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
-    
-    // Print instructions
-    printf("Controls:\n");
-    printf("Left Mouse: Rotate cube (when dragging)\n");
-    printf("Right Mouse: Zoom (when dragging)\n");
-    printf("Middle Mouse: Reset view\n");
-    printf("Mouse Wheel: Zoom in/out\n");
-    printf("Left Click: Select/highlight cube\n");
-    printf("W/S: Rotate up/down\n");
-    printf("A/D: Rotate left/right\n");
-    printf("Q/E: Zoom out/in\n");
-    printf("R: Reset view and clear highlights\n");
-    printf("C: Clear highlights\n");
-    printf("ESC: Exit\n");
-    
-    glutMainLoop();
-    return 0;
-}
