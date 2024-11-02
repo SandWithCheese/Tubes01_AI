@@ -65,7 +65,7 @@ int main() {
             break;
         }
         case 3: {
-            RandomRestart rr = RandomRestart(cube, 10000);
+            RandomRestart rr = RandomRestart(cube);
             start = high_resolution_clock::now();
             rr.solve();
             stop = high_resolution_clock::now();
