@@ -81,7 +81,7 @@ int MagicFive::checkColumn() const {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < rows; j++) {
             int col_sum = 0;
-            for (int k = j; k <= cols; k+=5) {
+            for (int k = j; k < cols; k+=5) {
                 col_sum += data[i][k];
             }
             if (col_sum != MAGIC_NUMBER) {
@@ -191,22 +191,22 @@ set<Point> MagicFive::incorrectPosition() {
         }
         currRow++;
     }
-
+    
     // Column
     for (int i = 0; i < rows; i++) { // Level
         for (int j = 0; j < rows; j++) { // Ke samping
             int col_sum = 0;
-            for (int k = j; k <= cols; k+=5) { // Ke belakang
+            for (int k = j; k < cols; k+=5) { // Ke belakang
                 col_sum += data[i][k];
             }
             if (col_sum != MAGIC_NUMBER) {
-                for (int k = j; k <= cols; k+=5) {
+                for (int k = j; k < cols; k+=5) {
                     incorrectPosition.insert(Point(i, k));
                 }
             }
         }
     }
-
+    
     // Pillar
     for (int i = 0; i < cols; ++i) { // Ke setiap item di sebuah level
         int pillar_sum = 0;
@@ -219,7 +219,103 @@ set<Point> MagicFive::incorrectPosition() {
             }
         }
     }
+    
+    // Plane diagonal
 
+    // Check diagonals divided by rows
+    currRow = 0;
+    for (const auto& row : data) {
+        int diag1 = row[0] + row[6] + row[12] + row[18] + row[24];
+        int diag2 = row[4] + row[8] + row[12] + row[16] + row[20];
+        if (diag1 != MAGIC_NUMBER) {
+            for (int i = 0; i < cols; i+=6) {
+                incorrectPosition.insert(Point(currRow, i));
+            }
+        };
+        currRow++;
+        if (diag2 != MAGIC_NUMBER) {
+            for (int i = rows - 1; i < cols; i+=4) {
+                incorrectPosition.insert(Point(currRow, i));
+            }
+        };
+    }
+    
+    // Check diagonals divided by columns
+    for (int i = 0; i < rows; ++i) {
+        int diag1 = data[0][i] + data[1][i + 5] + data[2][i + 10] + data[3][i + 15] + data[4][i + 20];
+        int diag2 = data[4][i + 20] + data[3][i + 15] + data[2][i + 10] + data[1][i + 5] + data[0][i];
+        if (diag1 != MAGIC_NUMBER) {
+            for (int j = 0; j < rows; j++) {
+                incorrectPosition.insert(Point(j, i + j * 5));
+            }
+        };
+        if (diag2 != MAGIC_NUMBER) {
+            for (int j = 0; j < rows; j++) {
+                incorrectPosition.insert(Point(j, i + (4 - j) * 5));
+            }
+        };
+    }
+    
+    // Check diagonals divided by pillars
+    for (int i = 0; i < cols; i += 5) {
+        int diag1 = data[0][i] + data[1][i + 1] + data[2][i + 2] + data[3][i + 3] + data[4][i + 4];
+        int diag2 = data[0][i + 4] + data[1][i + 3] + data[2][i + 2] + data[3][i + 1] + data[4][i];
+        if (diag1 != MAGIC_NUMBER) {
+            for (int j = 0; j < rows; j++) {
+                incorrectPosition.insert(Point(j, i + j));
+            }
+        };
+        if (diag2 != MAGIC_NUMBER) {
+            for (int j = 0; j < rows; j++) {
+                incorrectPosition.insert(Point(j, i + (4 - j)));
+            }
+        };
+    }
+    
+    // Space diagonals
+    vector<vector<Point>> diagPos;
+
+    vector<Point>temp1;
+    for(int i = 0; i < rows; i++) {
+        temp1.emplace_back(i, i * 6);
+    }
+    diagPos.emplace_back(temp1);
+
+    vector<Point>temp2;
+    for(int i = 0; i < rows; i++) {
+        temp2.emplace_back(i, i*4);
+    }
+    diagPos.emplace_back(temp2);
+
+    vector<Point>temp3;
+    for(int i = 0; i < rows; i++) {
+        temp3.emplace_back(i, (5-i) * 4);
+    }
+    diagPos.emplace_back(temp3);
+
+    vector<Point>temp4;
+    for(int i = 0; i < rows; i++) {
+        temp4.emplace_back(i, (4-i) * 6);
+    }
+    diagPos.emplace_back(temp4);
+
+
+    vector<int> diags = {
+            data[0][0] + data[1][6] + data[2][12] + data[3][18] + data[4][24],
+            data[0][4] + data[1][8] + data[2][12] + data[3][16] + data[4][20],
+            data[0][20] + data[1][16] + data[2][12] + data[3][8] + data[4][4],
+            data[0][24] + data[1][18] + data[2][12] + data[3][6] + data[4][0]
+    };
+
+
+    for (int i = 0; i < 4; i++) {
+        if (diags[i] != MAGIC_NUMBER) {
+            for (int j = 0; j < rows; j++) {
+                incorrectPosition.insert(diagPos[i][j]);
+            }
+        }
+    }
+    
     return incorrectPosition;
 
 }
