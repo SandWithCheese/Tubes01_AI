@@ -11,6 +11,8 @@ public:
     Solver(const MagicFive& other);
     virtual ~Solver();
 
+    MagicFive& getCube();
+
     virtual void solve() = 0;
 
     void showCube();
