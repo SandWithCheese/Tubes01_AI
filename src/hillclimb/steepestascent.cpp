@@ -42,15 +42,6 @@ void SteepestAscent::solve() {
     std::cout << "Final objective function: " << currentScore << std::endl;
     std::cout << "Total iterations: " << count << std::endl;
 
-    // final cube
-    std::cout << "Solution matrix:" << std::endl;
-    for (const auto& row : cube.getData()) {
-        for (int element : row) {
-            std::cout << element << " ";
-        }
-        std::cout << std::endl;
-    }
-
     // optimal global or not
     if (currentScore == 0) {
         std::cout << "Optimal solution found." << std::endl;
