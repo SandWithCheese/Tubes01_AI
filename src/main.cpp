@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
             break;
         }
         case 5: {
-            SimulatedAnnealing sa = SimulatedAnnealing(cube, 10000000, 1, 0.5); // Dummy value
+            SimulatedAnnealing sa = SimulatedAnnealing(); // Dummy value
             start = high_resolution_clock::now();
             sa.solve();
             stop = high_resolution_clock::now();
