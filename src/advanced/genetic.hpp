@@ -13,6 +13,9 @@ using namespace std;
 
 class Genetic : public Solver {
 private:
+    vector<int> max_objective_functions;
+    vector<int> avg_objective_functions;
+
     int iterations;
     int population_size;
     int threshold;
@@ -22,6 +25,13 @@ public:
     Genetic(const MagicFive& other);
     Genetic(const MagicFive& other, int iterations, int population_size, int threshold);
     virtual ~Genetic();
+
+    vector<int> getMaxObjectiveFunctions();
+    vector<int> getAvgObjectiveFunctions();
+    void setMaxObjectiveFunctions(const vector<int>& new_objective_functions);
+    void setAvgObjectiveFunctions(const vector<int>& new_objective_functions);
+    void appendMaxObjectiveFunction(int new_objective_function);
+    void appendAvgObjectFunction(int new_objective_function);
 
     int getIterations();
     void setIterations(int iterations);

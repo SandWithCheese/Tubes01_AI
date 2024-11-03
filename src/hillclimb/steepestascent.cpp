@@ -7,6 +7,7 @@ SteepestAscent::~SteepestAscent() {}
 
 void SteepestAscent::solve() {
     int currentScore = cube.objectiveFunction();  // current cube's objective score
+    appendObjectiveFunction(currentScore);
     bool improved;
 
     // buat hitung iterasi
@@ -36,6 +37,8 @@ void SteepestAscent::solve() {
             count++;
         }
 
+        appendObjectiveFunction(currentScore);
+
     } while (improved);  // lanjut kalo ada tetangga yang better
 
     // result objective function 
@@ -45,7 +48,8 @@ void SteepestAscent::solve() {
     // optimal global or not
     if (currentScore == 0) {
         std::cout << "Optimal solution found." << std::endl;
-    } else {
+    }
+    else {
         std::cout << "Optimal solution not found." << std::endl;
     }
 }
