@@ -8,10 +8,10 @@ using namespace std;
 
 class RandomRestart : public HillClimb {
     private: 
-        int max_restart = 100;
+        int max_restart;
     public:
         RandomRestart();
-        RandomRestart(const MagicFive& other);
+        RandomRestart(const MagicFive& other, int max_restart);
 
         void solve() override;
 };
