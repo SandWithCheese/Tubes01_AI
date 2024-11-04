@@ -58,7 +58,16 @@ int main(int argc, char** argv) {
             break;
         }
         case 2: {
-            SidewaysMove sm = SidewaysMove(cube, 100); 
+            int maxSidewaysMoves;
+            cout << "Input maximum sideways moves: ";
+            if (!(cin >> maxSidewaysMoves) || maxSidewaysMoves < 0) {
+                cout << "Invalid input. Using default value of 100." << endl;
+                maxSidewaysMoves = 100;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            SidewaysMove sm = SidewaysMove(cube, maxSidewaysMoves);
             start = high_resolution_clock::now();
             sm.solve();
             stop = high_resolution_clock::now();
@@ -71,7 +80,16 @@ int main(int argc, char** argv) {
             break;
         }
         case 3: {
-            RandomRestart rr = RandomRestart(cube);
+            int max_restart;
+            cout << "Input maximum restarts: ";
+            if (!(cin >> max_restart) || max_restart < 0) {
+                cout << "Invalid input. Using default value of 1000." << endl;
+                max_restart = 1000;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            RandomRestart rr = RandomRestart(cube, max_restart);
             start = high_resolution_clock::now();
             rr.solve();
             stop = high_resolution_clock::now();
@@ -97,7 +115,7 @@ int main(int argc, char** argv) {
             break;
         }
         case 5: {
-            SimulatedAnnealing sa = SimulatedAnnealing(); // Dummy value
+            SimulatedAnnealing sa = SimulatedAnnealing();
             start = high_resolution_clock::now();
             sa.solve();
             stop = high_resolution_clock::now();
@@ -105,12 +123,39 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
-            vector<float> obj = sa.getAcceptanceProbabilities();
-            Plot::plotAcceptanceProbabilities(obj);
+            vector<int> obj = sa.getObjectiveFunctions();
+            vector<float> accProb = sa.getAcceptanceProbabilities();
+            Plot::plotObjectiveFunctions(obj);
+            Plot::plotAcceptanceProbabilities(accProb);
             break;
         }
         case 6: {
-            Genetic gen = Genetic(cube); // Dummy value
+            int population_size, iterations, threshold;
+            cout << "Input population size: ";
+            if (!(cin >> population_size) || population_size <= 0) {
+                cout << "Invalid input. Using default value of 100." << endl;
+                population_size = 100;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << "Input iterations: ";
+            if (!(cin >> iterations) || iterations <= 0) {
+                cout << "Invalid input. Using default value of 1000." << endl;
+                iterations = 1000;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            cout << "Input threshold (0-100): ";
+            if (!(cin >> threshold) || threshold < 0 || threshold > 100) {
+                cout << "Invalid input. Using default value of 10." << endl;
+                threshold = 10;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
+            Genetic gen = Genetic(cube, iterations, population_size, threshold);
             start = high_resolution_clock::now();
             gen.solve();
             stop = high_resolution_clock::now();
@@ -133,7 +178,7 @@ int main(int argc, char** argv) {
         case 8: {
             MagicFive newCube;
             cube.setData(newCube.getData());
-            solvedCube.showCube();
+            cube.showCube();
             break;
         }
         case 9: {
@@ -141,7 +186,7 @@ int main(int argc, char** argv) {
             break;
         }
         default: {
-            continue;
+            break;
         }
         }
     }

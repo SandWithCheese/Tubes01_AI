@@ -6,36 +6,54 @@ Tugas Besar I pada kuliah IF3070 Dasar Inteligensi Buatan dan IF3170 Inteligensi
 
 ## Cara Menjalankan Program
 
+Kompilasi di Windows
+
+1. Install [X Server](https://sourceforge.net/projects/vcxsrv/)
+
+2. Konfigurasi X Server
+
+3. Build Docker
+
+    ```bash
+    docker build -t cpp-opengl-app .
+
+    ```
+
+4. Jalankan Program
+
+    ```bash
+    ./run.bat
+    ```
+
 Kompilasi di WSL
 
-1. Install CMake
+1. Install X Server
 
     ```bash
-    sudo apt-get -y install cmake
+    sudo apt install x11-xserver-utils
     ```
 
-2. Pindah ke direktori build
+2. Konfigurasi X Server
 
     ```bash
-    cd build
+    xhost +local:docker
     ```
 
-3. Jalankan perintah `cmake` di dalam direktori build
+3. Build Docker
 
     ```bash
-    cmake ..
+    docker build -t cpp-opengl-app .
+
     ```
 
-4. Build dengan menjalankan `make`
+4. Jalankan Program
 
     ```bash
-    make
-    ```
-
-5. Jalankan executable
-
-    ```bash
-    ./main
+    docker run -it --rm \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    --network=host \
+    cpp-opengl-app
     ```
 
 ## Anggota
