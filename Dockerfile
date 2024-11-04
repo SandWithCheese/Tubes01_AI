@@ -1,53 +1,45 @@
 # Use Ubuntu as base image
 FROM ubuntu:22.04
 
-# Avoid interactive prompts during package installation
+# Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install required packages including Python 3.10
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
-    software-properties-common \
-    curl \
-    freeglut3-dev \
-    libgl1-mesa-dev \
     git \
-    && add-apt-repository ppa:deadsnakes/ppa \
-    && apt-get update \
-    && apt-get install -y \
     python3.10 \
     python3.10-dev \
-    python3.10-distutils \
+    python3-pip \
+    freeglut3-dev \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    libx11-dev \
+    libxrandr-dev \
+    libxinerama-dev \
+    libxcursor-dev \
+    libxi-dev \
+    mesa-utils \
+    x11-apps \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pip for Python 3.10
-RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+# Install Python dependencies
+RUN pip3 install numpy matplotlib
 
-# Install required Python packages
-RUN python3.10 -m pip install numpy matplotlib
-
-# Create symlinks for python3 and python
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 \
-    && update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1
-
-# Set working directory
+# Create working directory
 WORKDIR /app
 
-# Copy the source code
-COPY . .
+# Copy your project files
+COPY . /app/
 
-# Create build directory and build the project
-RUN mkdir -p build
-WORKDIR /app/build
-
-# Create script to build the project
-RUN echo '#!/bin/bash\n\
+# Build the project
+RUN mkdir build && cd build && \
     cmake .. && \
-    make -j$(nproc) && \
-    echo "Build completed. Check the build directory for the executable."' > /build.sh
+    make
 
-RUN chmod +x /build.sh
+# Set display environment variable
+ENV DISPLAY=:0
 
-# Set the entrypoint to our build script
-ENTRYPOINT ["/build.sh"]
+# Command to run the application
+CMD ["./build/main"]
