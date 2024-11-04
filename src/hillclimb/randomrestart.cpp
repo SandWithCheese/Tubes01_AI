@@ -60,12 +60,4 @@ void RandomRestart::solve() {
         cout << "Best solution found after " << this->max_restart << " restarts." << endl;
         cout << "Objective function: " << best_objective << endl;
     }
-
-    cout << "Solution matrix:" << endl;
-    for (const auto& row : cube.getData()) {
-        for (int element : row) {
-            cout << element << " ";
-        }
-        cout << endl;
-    }
 }

@@ -17,7 +17,7 @@ void Stochastic::solve() {
         int random_obj = random_successor.objectiveFunction();
 
         if (random_obj > current_obj) {
-            cout << "Objective function: " << random_obj << endl;
+            // cout << "Objective function: " << random_obj << endl;
             cube.setData(random_successor_data);
         }
         

@@ -33,7 +33,7 @@ void SteepestAscent::solve() {
         if (improved) {
             cube.setData(MagicFive::listToMatrix(bestSuccessorData));  // ambil suksesor best value 
             currentScore = bestScore;
-            cout << "Objective function: " << currentScore << endl;
+            // cout << "Objective function: " << currentScore << endl;
             count++;
         }
 
@@ -43,7 +43,7 @@ void SteepestAscent::solve() {
 
     // result objective function 
     std::cout << "Final objective function: " << currentScore << std::endl;
-    std::cout << "Total iterations: " << count << std::endl;
+        cout << "Solution found in " << count << " iterations." << endl;
 
     // optimal global or not
     if (currentScore == 0) {
