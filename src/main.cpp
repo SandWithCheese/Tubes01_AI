@@ -182,9 +182,26 @@ int main(int argc, char** argv) {
             break;
         }
         case 7: {
+            cout << "Base cube or solved cube?" << endl;
+            cout << "1. Base cube" << endl;
+            cout << "2. Solved cube" << endl;
+            int choice;
+            if (!(cin >> choice) || choice < 1 || choice > 2) {
+                cout << "Invalid input. Using base cube." << endl;
+                choice = 1;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+
             cout << "Visualisasi" << endl;
-            solvedCube.showCube();
-            CubeVisualizer::visualize(argc, argv, solvedCube);
+            if (choice == 1) {
+                cube.showCube();
+                CubeVisualizer::visualize(argc, argv, cube);
+            }
+            else {
+                solvedCube.showCube();
+                CubeVisualizer::visualize(argc, argv, solvedCube);
+            }
             break;
         }
         case 8: {

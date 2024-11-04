@@ -31,5 +31,6 @@ void Stochastic::solve() {
         }
     }
 
+    cout << "Objective function: " << cube.objectiveFunction() << endl;
     cout << "Solution found in " << iterations << " iterations." << endl;
 }
