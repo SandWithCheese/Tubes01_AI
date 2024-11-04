@@ -2,7 +2,7 @@
 
 RandomRestart::RandomRestart() : HillClimb() {}
 
-RandomRestart::RandomRestart(const MagicFive& other) : HillClimb(other) {}
+RandomRestart::RandomRestart(const MagicFive& other, int max_restart) : HillClimb(other), max_restart(max_restart) {}
 
 void RandomRestart::solve() {
     int best_objective = cube.objectiveFunction();
