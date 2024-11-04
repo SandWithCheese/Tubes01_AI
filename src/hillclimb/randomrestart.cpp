@@ -8,6 +8,7 @@ void RandomRestart::solve() {
     int best_objective = cube.objectiveFunction();
     appendObjectiveFunction(best_objective);
     vector<vector<int>> best_data = cube.getData();
+    int iterations = 0;
     int restarts = 0;
 
     while (restarts < this->max_restart) {
@@ -37,8 +38,11 @@ void RandomRestart::solve() {
             }
 
             appendObjectiveFunction(currentScore);
+            iterations++;
 
         } while (improved);  // lanjut kalo ada tetangga yang better
+
+        cout << "Restart " << restarts << ": " << iterations << " iterations with objective function: " << currentScore << endl;
 
         if (currentScore > best_objective) {
             best_objective = currentScore;

@@ -465,8 +465,8 @@ void CubeVisualizer::reshape(int w, int h) {
 // Keyboard function for rotation and control
 void CubeVisualizer::keyboard(unsigned char key, int x, int y) {
     switch (key) {
-        case 'w': rotationX += 5.0f; break;
-        case 's': rotationX -= 5.0f; break;
+        case 'w': rotationX -= 5.0f; break;
+        case 's': rotationX += 5.0f; break;
         case 'a': rotationY -= 5.0f; break;
         case 'd': rotationY += 5.0f; break;
         case 'q': distance += 1.0f; break;
