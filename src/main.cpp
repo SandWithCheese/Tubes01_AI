@@ -58,9 +58,9 @@ int main(int argc, char** argv) {
             break;
         }
         case 2: {
-            SidewaysMove sm = SidewaysMove(cube, 1000); // Dummy value
+            SidewaysMove sm = SidewaysMove(cube, 100); 
             start = high_resolution_clock::now();
-            sm.solve(); // Immplement
+            sm.solve();
             stop = high_resolution_clock::now();
             duration = duration_cast<milliseconds>(stop - start);
             cout << "Execution time: " << duration.count() << " ms" << endl;
