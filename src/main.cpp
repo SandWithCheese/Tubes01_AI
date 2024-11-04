@@ -51,8 +51,10 @@ int main(int argc, char** argv) {
             stop = high_resolution_clock::now();
             duration = duration_cast<milliseconds>(stop - start);
             cout << "Execution time: " << duration.count() << " ms" << endl;
+            cout << "Final Cube:" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
+            cout << endl;
             vector<int> obj = sa.getObjectiveFunctions();
             Plot::plotObjectiveFunctions(obj);
             break;
@@ -73,8 +75,10 @@ int main(int argc, char** argv) {
             stop = high_resolution_clock::now();
             duration = duration_cast<milliseconds>(stop - start);
             cout << "Execution time: " << duration.count() << " ms" << endl;
+            cout << "Final Cube:" << endl;
             solvedCube.setData(sm.getCube().getData());
             solvedCube.showCube();
+            cout << endl;
             vector<int> obj = sm.getObjectiveFunctions();
             Plot::plotObjectiveFunctions(obj);
             break;
@@ -95,8 +99,10 @@ int main(int argc, char** argv) {
             stop = high_resolution_clock::now();
             duration = duration_cast<milliseconds>(stop - start);
             cout << "Execution time: " << duration.count() << " ms" << endl;
+            cout << "Final Cube:" << endl;
             solvedCube.setData(rr.getCube().getData());
             solvedCube.showCube();
+            cout << endl;
             vector<int> obj = rr.getObjectiveFunctions();
             Plot::plotObjectiveFunctions(obj);
             break;
@@ -108,8 +114,10 @@ int main(int argc, char** argv) {
             stop = high_resolution_clock::now();
             duration = duration_cast<milliseconds>(stop - start);
             cout << "Execution time: " << duration.count() << " ms" << endl;
+            cout << "Final Cube:" << endl;
             solvedCube.setData(st.getCube().getData());
             solvedCube.showCube();
+            cout << endl;
             vector<int> obj = st.getObjectiveFunctions();
             Plot::plotObjectiveFunctions(obj);
             break;
@@ -121,8 +129,10 @@ int main(int argc, char** argv) {
             stop = high_resolution_clock::now();
             duration = duration_cast<milliseconds>(stop - start);
             cout << "Execution time: " << duration.count() << " ms" << endl;
+            cout << "Final Cube:" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
+            cout << endl;
             vector<int> obj = sa.getObjectiveFunctions();
             vector<float> accProb = sa.getAcceptanceProbabilities();
             Plot::plotObjectiveFunctions(obj);
@@ -161,8 +171,10 @@ int main(int argc, char** argv) {
             stop = high_resolution_clock::now();
             duration = duration_cast<milliseconds>(stop - start);
             cout << "Execution time: " << duration.count() << " ms" << endl;
+            cout << "Final Cube:" << endl;
             solvedCube.setData(gen.getCube().getData());
             solvedCube.showCube();
+            cout << endl;
             vector<int> max_obj = gen.getMaxObjectiveFunctions();
             vector<int> avg_obj = gen.getAvgObjectiveFunctions();
             Plot::plotMaxObjectiveFunctions(max_obj);
