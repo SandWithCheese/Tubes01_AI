@@ -6,7 +6,7 @@ Tugas Besar I pada kuliah IF3070 Dasar Inteligensi Buatan dan IF3170 Inteligensi
 
 ## Cara Menjalankan Program
 
-Kompilasi di Windows
+### Kompilasi di Windows
 
 1. Install [X Server](https://sourceforge.net/projects/vcxsrv/)
 
@@ -25,7 +25,7 @@ Kompilasi di Windows
     ./run.bat
     ```
 
-Kompilasi di WSL
+### Kompilasi di WSL
 
 1. Install X Server
 
