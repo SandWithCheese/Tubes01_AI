@@ -19,26 +19,19 @@ using namespace std;
 class SimulatedAnnealing : public Solver {
 private:
     vector<float> acceptance_probabilities;
-
     float temperature;
     float cooling_rate;
     float acceptance_probability;
+    double min_temperature;
 
 public:
-    SimulatedAnnealing(float temperature, float cooling_rate);
-    SimulatedAnnealing(float temperature, float cooling_rate, float acceptance_probability);
-    SimulatedAnnealing(const MagicFive& other, float temperature, float cooling_rate);
-    SimulatedAnnealing(const MagicFive& other, float temperature, float cooling_rate, float acceptance_probability);
-    
+    SimulatedAnnealing();
     vector<float> getAcceptanceProbabilities();
-    void setAcceptanceProbabilities(const vector<float>& new_acceptance_probabilities);
     void appendAcceptanceProbability(float new_acceptance_probability);
-
     vector<vector<int>> generateRandomSuccessor();
-    
-    float acceptanceProbability(int objCurrent, int objNeighbor);
-    void decreaseTemperature();
     void solve() override;
+    double decreaseTemperature(long iteration);
+    double acceptanceProbability(int objCurrent, int objNeighbor, double currentTemperature);
 };
 
 #endif
