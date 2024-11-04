@@ -88,11 +88,12 @@ Kompilasi Manual
     ./main
     ```
 
-## Anggota
+## Anggota dan Pembagian Tugas
 
-| Nama                       | NIM      |
-|----------------------------|----------|
-| Ahmad Naufal Ramadan       | 13522005 |
-| Erdianti Wiga Putri Andini | 13522053 |
-| Bagas Sambega Rosyada      | 13522071 |
-| Ahmad Mudabbir Arif        | 13522072 |
+| Nama                       | NIM      | Pembagian Tugas                                 |
+|----------------------------|----------|-------------------------------------------------|
+| Ahmad Naufal Ramadan       | 13522005 | Laporan, Stochastic, Genetic Algorithm, Plot, Cube (MagicFive) |
+| Erdianti Wiga Putri Andini | 13522053 | Laporan, Steepest Ascent, Sideways Move        |
+| Bagas Sambega Rosyada      | 13522071 | Laporan, Simulated Annealing, Cube (MagicFive) |
+| Ahmad Mudabbir Arif        | 13522072 | Laporan, Random Restart, Visualisasi           |
+
