@@ -26,9 +26,11 @@ private:
 
 public:
     SimulatedAnnealing();
+    SimulatedAnnealing(const MagicFive& cube);
     vector<float> getAcceptanceProbabilities();
     void appendAcceptanceProbability(float new_acceptance_probability);
     vector<vector<int>> generateRandomSuccessor();
+    void generateInitialTemperature();
     void solve() override;
     double decreaseTemperature(long iteration);
     double acceptanceProbability(int objCurrent, int objNeighbor, double currentTemperature);
