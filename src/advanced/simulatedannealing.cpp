@@ -39,12 +39,14 @@ void SimulatedAnnealing::appendAcceptanceProbability(float new_acceptance_probab
 
 void SimulatedAnnealing::solve() {
     int objCurrent = cube.objectiveFunction();
+    appendObjectiveFunction(objCurrent);
     double currentTemperature = this->temperature;
     long iteration = 1;
     while (currentTemperature > this->min_temperature && objCurrent < 0) {
         vector<vector<int>> neighbor = generateRandomSuccessor();
         int objNeighbor = MagicFive(neighbor).objectiveFunction();
         double probability = acceptanceProbability(objCurrent, objNeighbor, currentTemperature);
+        appendObjectiveFunction(objCurrent);
         appendAcceptanceProbability((float)probability);
         if (objNeighbor > objCurrent) {
             cube = MagicFive(neighbor);
