@@ -49,12 +49,43 @@ Kompilasi di WSL
 4. Jalankan Program
 
     ```bash
-    docker run -it --rm \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $(pwd):/app \
-    --network=host \
-    cpp-opengl-app
+    ./run.sh
+    ```
+
+Kompilasi Manual
+
+1. Install Dependencies
+
+    - C++
+    - CMake
+    - OpenGL
+    - Python 3.10
+    - Matplotlib
+    - Numpy
+    - X Server (WSL)
+
+2. Pindah ke Folder `build`
+
+    ```bash
+    cd build
+    ```
+
+3. Jalankan CMake
+
+    ```bash
+    cmake ..
+    ```
+
+4. Build Binary
+
+    ```bash
+    make
+    ```
+
+5. Jalankan Program
+
+    ```bash
+    ./main
     ```
 
 ## Anggota
