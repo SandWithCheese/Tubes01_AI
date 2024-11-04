@@ -6,6 +6,11 @@ REM Get IP address
 for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /R /C:"IPv4 Address.*172\."') do set IP=%%a
 set IP=%IP:~1%
 
+REM Build the binary
+docker run -it --rm ^
+    -v %PROJECT_PATH%:/app ^
+    cpp-opengl-app /bin/bash -c "cd /app/build && make"
+
 REM Run the container
 docker run -it --rm ^
     -e DISPLAY=%IP%:0.0 ^

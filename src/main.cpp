@@ -105,8 +105,10 @@ int main(int argc, char** argv) {
             cout << "Execution time: " << duration.count() << " ms" << endl;
             solvedCube.setData(sa.getCube().getData());
             solvedCube.showCube();
-            vector<float> obj = sa.getAcceptanceProbabilities();
-            Plot::plotAcceptanceProbabilities(obj);
+            vector<int> obj = sa.getObjectiveFunctions();
+            vector<float> accProb = sa.getAcceptanceProbabilities();
+            Plot::plotObjectiveFunctions(obj);
+            Plot::plotAcceptanceProbabilities(accProb);
             break;
         }
         case 6: {

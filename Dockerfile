@@ -30,7 +30,7 @@ RUN pip3 install numpy matplotlib
 # Create working directory
 WORKDIR /app
 
-# Copy your project files
+# Copy the project files
 COPY . /app/
 
 # Build the project
